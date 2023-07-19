@@ -12,8 +12,9 @@ const storeOptions = {
       todos: todoService.query() || '',
       filterBy: {
         task: '',
-        status:null
+        status: null
       },
+      user: userService.getLoggedinUser()
     }
   },
   mutations: {
@@ -50,7 +51,14 @@ const storeOptions = {
       state.filterBy = { ...filterBy }
       console.log('filterBy:', filterBy)
       state.todos = todoService.query(filterBy)
+    },
+
+    updateUsername(state, { fullName }) {
+      console.log(fullName)
+      const updatedName = userService.updateUserName(fullName)
+      state.user.fullName = updatedName
     }
+    
     // changeCount(state, { val }) {
     //   state.count += val
     // },

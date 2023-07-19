@@ -2,7 +2,7 @@
 export default {
     template: `
     <section class="filterBy">
-        <pre>{{ filterBy }}</pre>
+        <!-- <pre>{{ filterBy }}</pre> -->
         <form @submit.prevent="filter">
 
             <input 

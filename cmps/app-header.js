@@ -1,13 +1,16 @@
-import userMsg from './user-msg.js'
+// import userMsg from './user-msg.js'
 
 export default {
     template: `
             <header>
-                <user-msg></user-msg>
+                <!-- <user-msg></user-msg> -->
                 <nav>
                     <router-link to="/">Home</router-link> |
-                    <router-link to="/todos">Todos</router-link>
+                    <router-link to="/todo">Todos</router-link> |
+                    <router-link to="/user">Profile</router-link>
                 </nav>
+               <!-- <pre> {{user}}</pre> -->
+               <h3>Hello {{ user.fullName }}</h3>
             </header>
     `,
     data() {
@@ -15,6 +18,9 @@ export default {
         }
     },
     computed: {
+        user (){
+            return this.$store.state.user
+        }
     },
     methods: {
         // checkout() {
@@ -22,6 +28,6 @@ export default {
         // },
     },
     components: {
-        userMsg,
+        // userMsg,
     },
 }
