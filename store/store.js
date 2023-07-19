@@ -16,7 +16,15 @@ const storeOptions = {
 
     saveTodo(state, { todo }) {
       todoService.save(todo)
-      state.todos.push(todo)
+
+      if (todo._id) {
+        let newTodos = [...state.todos]
+        newTodos = newTodos.map(t => t._id !== todo._id ? t : todo)
+        state.todos = [...newTodos]
+      }
+      else {
+        state.todos.push(todo)
+      }
     },
 
     removeTodo(state, { todoId }) {
@@ -25,6 +33,14 @@ const storeOptions = {
       state.todos.splice(idx, 1)
 
       todoService.remove(todoId)
+    },
+
+    toggleIsDone(state, { todo }) {
+      const newTodo = { ...todo, isDone: !todo.isDone }
+      let newTodos = [...state.todos]
+      newTodos = newTodos.map(t => t._id !== newTodo._id ? t : newTodo)
+      state.todos = [...newTodos]
+
     }
 
     // changeCount(state, { val }) {

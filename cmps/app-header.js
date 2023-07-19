@@ -5,7 +5,7 @@ export default {
             <header>
                 <user-msg></user-msg>
                 <nav>
-                    <router-link to="/">Home</router-link> 
+                    <router-link to="/">Home</router-link> |
                     <router-link to="/todos">Todos</router-link>
                 </nav>
             </header>

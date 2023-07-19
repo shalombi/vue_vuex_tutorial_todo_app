@@ -11,7 +11,7 @@ export default {
                 placeholder="task.." 
                 v-model = "todo.task"
                 />
-
+                <button>save</button>
             </form>
 
           <pre> {{ todo }}</pre>  
@@ -20,15 +20,25 @@ export default {
     `,
     data() {
         return {
-            todo: todoService.getEmptyTodo()
+            todo: null
         }
     },
     created() {
+        const id = this.$route.params.id
+        console.log(id)
+
+        if (id) {
+            this.todo = todoService.getById(id)
+        }
+        else {
+            this.todo = todoService.getEmptyTodo()
+        }
     },
     methods: {
         save() {
             console.log('save')
             this.$store.commit({ type: 'saveTodo', todo: this.todo })
+            this.$router.push('/todo')
         }
 
     },
@@ -36,3 +46,4 @@ export default {
     }
 
 }
+

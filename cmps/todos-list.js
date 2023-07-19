@@ -7,6 +7,8 @@ export default {
              <ul v-for="todo in todos">
                  <todo-preview :todo="todo" />
                  <button @click="remove(todo._id)">x</button>
+                 <button @click="onToggleIsDone(todo)">sign is done</button>
+                 <router-link :to="'/todo/edit/' + todo._id"> edit </router-link>
              </ul>
         </section>
     
@@ -20,6 +22,9 @@ export default {
     methods: {
         remove(todoId) {
             this.$emit('remove', todoId)
+        },
+        onToggleIsDone(todo){
+            this.$emit('toggleIsDone',todo)
         }
     },
     computed: {

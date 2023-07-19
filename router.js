@@ -10,11 +10,11 @@ const routes = [
         component: homePage
     },
     {
-        path: '/todos',
+        path: '/todo',
         component: todoApp
     },
     {
-        path: '/edit',
+        path: '/todo/edit/:id?',
         component: todoEdit
     },
     // {

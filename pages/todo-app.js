@@ -6,9 +6,9 @@ export default {
     template: `
         <section class="todo-app">
             <h1>Todos</h1>
-            <router-link to="/edit"> add </router-link>
+            <router-link to="/todo/edit"> add </router-link>
             <!-- <pre>{{ todos }}</pre>  -->
-            <todos-list :todos="todos" @remove="onRemoveTodo"/>
+            <todos-list :todos="todos" @remove="onRemoveTodo" @toggleIsDone="toggleIsDone"/>
         </section>
     `,
     data() {
@@ -34,6 +34,9 @@ export default {
         onRemoveTodo(todoId) {
             console.log('todoId:', todoId)
             this.$store.commit({ type: 'removeTodo', todoId })
+        },
+        toggleIsDone (todo){
+            this.$store.commit({ type: 'toggleIsDone', todo })
         }
 
         // addToCart(product) {
