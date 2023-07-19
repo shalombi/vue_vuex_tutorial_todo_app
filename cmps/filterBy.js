@@ -9,6 +9,7 @@ export default {
             type="text" 
             v-model="filterBy.task"
             placeholder="filter.."
+            @input = "filter"
             />
 
             <button> filter </button>
