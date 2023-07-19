@@ -14,6 +14,19 @@ const storeOptions = {
   },
   mutations: {
 
+    saveTodo(state, { todo }) {
+      todoService.save(todo)
+      state.todos.push(todo)
+    },
+
+    removeTodo(state, { todoId }) {
+      console.log('todoId from store:', todoId)
+      const idx = state.todos.findIndex(todo => todo._id === todoId)
+      state.todos.splice(idx, 1)
+
+      todoService.remove(todoId)
+    }
+
     // changeCount(state, { val }) {
     //   state.count += val
     // },

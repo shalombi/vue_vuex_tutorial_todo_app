@@ -6,8 +6,9 @@ export default {
     template: `
         <section class="todo-app">
             <h1>Todos</h1>
+            <router-link to="/edit"> add </router-link>
             <!-- <pre>{{ todos }}</pre>  -->
-            <todos-list :todos="todos"/>
+            <todos-list :todos="todos" @remove="onRemoveTodo"/>
         </section>
     `,
     data() {
@@ -30,6 +31,11 @@ export default {
         }
     },
     methods: {
+        onRemoveTodo(todoId) {
+            console.log('todoId:', todoId)
+            this.$store.commit({ type: 'removeTodo', todoId })
+        }
+
         // addToCart(product) {
         //     this.$store.commit({ type: 'addToCart', product })
         // },

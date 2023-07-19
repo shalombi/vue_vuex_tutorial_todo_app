@@ -5,7 +5,8 @@ export default {
     template: `
         <section class="list-todos">
              <ul v-for="todo in todos">
-                 <todo-preview :todo="todo"/>
+                 <todo-preview :todo="todo" />
+                 <button @click="remove(todo._id)">x</button>
              </ul>
         </section>
     
@@ -17,7 +18,9 @@ export default {
     created() {
     },
     methods: {
-
+        remove(todoId) {
+            this.$emit('remove', todoId)
+        }
     },
     computed: {
     },
