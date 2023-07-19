@@ -12,6 +12,7 @@ const storeOptions = {
       todos: todoService.query() || '',
       filterBy: {
         task: '',
+        status:null
       },
     }
   },

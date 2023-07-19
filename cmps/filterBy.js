@@ -12,25 +12,36 @@ export default {
             @input = "filter"
             />
 
+            <select @change="filter" v-model="filterBy.status">
+               <!-- <option>  All </option> -->
+
+               <option value ="all"> All </option>
+               <option :value ="true"> done </option>
+               <option :value ="false"> not done </option>
+            </select>
+
+
             <button> filter </button>
 
         </form>
-<!-- feature -->
+
     </section>
     
     `,
     data() {
         return {
             filterBy: {
-                task: ''
+                task: '',
+                status: null
             }
         }
     },
     created() {
     },
     methods: {
-        filter(){
-            this.$store.commit({ type: 'setFilterBy', filterBy:this.filterBy })
+        filter() {
+            // console.log(typeof this.filterBy.status)
+            this.$store.commit({ type: 'setFilterBy', filterBy: this.filterBy })
         }
     },
     computed: {

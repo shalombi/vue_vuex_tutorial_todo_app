@@ -27,7 +27,15 @@ function query(filterBy) {
 
     if (filterBy) {
         const regex = new RegExp(filterBy.task, 'i')
-        todos = todos.filter(todo => regex.test(todo.task))
+        if (filterBy.task) todos = todos.filter(todo => regex.test(todo.task))
+
+        if (filterBy.status && typeof filterBy.status !== 'string') {
+            todos = todos.filter((todo) => !todo.isDone)
+        } else if (filterBy.status === false) {
+            todos = todos.filter((todo) => todo.isDone)
+        } else {
+            todos = todos
+        }
     }
 
     return todos
