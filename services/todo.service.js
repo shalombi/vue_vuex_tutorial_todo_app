@@ -17,12 +17,19 @@ export const todoService = {
 var gTodos = _createTodos()
 
 
-function query() {
+function query(filterBy) {
     var todos = utilService.loadFromStorage(KEY)
-    if(!todos || !todos.length ){
-        const todos = JSON.parse(JSON.stringify(gTodos))
+
+    if (!todos || !todos.length) {
+        todos = JSON.parse(JSON.stringify(gTodos))
         utilService.saveToStorage(KEY, todos)
     }
+
+    if (filterBy) {
+        const regex = new RegExp(filterBy.task, 'i')
+        todos = todos.filter(todo => regex.test(todo.task))
+    }
+
     return todos
 }
 

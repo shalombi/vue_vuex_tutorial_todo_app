@@ -1,11 +1,14 @@
 
 import { todoService } from '../services/todo.service.js'
 import todosList from '../cmps/todos-list.js'
+import filterBy from '../cmps/filterBy.js'
+
 
 export default {
     template: `
         <section class="todo-app">
             <h1>Todos</h1>
+            <filter-by/>
             <router-link to="/todo/edit"> add </router-link>
             <!-- <pre>{{ todos }}</pre>  -->
             <todos-list :todos="todos" @remove="onRemoveTodo" @toggleIsDone="toggleIsDone"/>
@@ -35,7 +38,7 @@ export default {
             console.log('todoId:', todoId)
             this.$store.commit({ type: 'removeTodo', todoId })
         },
-        toggleIsDone (todo){
+        toggleIsDone(todo) {
             this.$store.commit({ type: 'toggleIsDone', todo })
         }
 
@@ -50,6 +53,7 @@ export default {
     },
 
     components: {
-        todosList
+        todosList,
+        filterBy
     }
 }

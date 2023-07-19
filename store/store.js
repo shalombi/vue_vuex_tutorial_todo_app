@@ -9,7 +9,10 @@ const storeOptions = {
   strict: true,
   state() {
     return {
-      todos: todoService.query() || ''
+      todos: todoService.query() || '',
+      filterBy: {
+        task: '',
+      },
     }
   },
   mutations: {
@@ -40,9 +43,13 @@ const storeOptions = {
       let newTodos = [...state.todos]
       newTodos = newTodos.map(t => t._id !== newTodo._id ? t : newTodo)
       state.todos = [...newTodos]
+    },
 
+    setFilterBy(state, { filterBy }) {
+      state.filterBy = { ...filterBy }
+      console.log('filterBy:', filterBy)
+      state.todos = todoService.query(filterBy)
     }
-
     // changeCount(state, { val }) {
     //   state.count += val
     // },
