@@ -2,6 +2,7 @@
 // meant to simplify first intro to Vuex
 
 
+import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
 const KEY = 'todosDB'
@@ -16,10 +17,14 @@ export const todoService = {
 
 var gTodos = _createTodos()
 
+async function query(filterBy) {
 
-function query(filterBy) {
-    var todos = utilService.loadFromStorage(KEY)
+    // var todos = utilService.loadFromStorage(KEY)
+    var todos = await storageService.query(KEY)
 
+    // console.log(todos)
+    // return
+    
     if (!todos || !todos.length) {
         todos = JSON.parse(JSON.stringify(gTodos))
         utilService.saveToStorage(KEY, todos)

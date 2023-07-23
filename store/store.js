@@ -9,7 +9,7 @@ const storeOptions = {
   strict: true,
   state() {
     return {
-      todos: todoService.query() || '',
+      todos: null,
       filterBy: {
         task: '',
         status: null
@@ -18,6 +18,10 @@ const storeOptions = {
     }
   },
   mutations: {
+    setTodos(state, { todos }) {
+      console.log('todos from DB:', todos)
+      state.todos = todos
+    },
 
     saveTodo(state, { todo }) {
       todoService.save(todo)
@@ -31,7 +35,6 @@ const storeOptions = {
         state.todos.push(todo)
       }
     },
-
     removeTodo(state, { todoId }) {
       console.log('todoId from store:', todoId)
       const idx = state.todos.findIndex(todo => todo._id === todoId)
@@ -39,6 +42,14 @@ const storeOptions = {
 
       todoService.remove(todoId)
     },
+    removeTodo(state, { todoId }) {
+      console.log('todoId from store:', todoId)
+      const idx = state.todos.findIndex(todo => todo._id === todoId)
+      state.todos.splice(idx, 1)
+
+      todoService.remove(todoId)
+    },
+
 
     toggleIsDone(state, { todo }) {
       const newTodo = { ...todo, isDone: !todo.isDone }
@@ -58,55 +69,28 @@ const storeOptions = {
       const updatedName = userService.updateUserName(fullName)
       state.user.fullName = updatedName
     }
-    
-    // changeCount(state, { val }) {
-    //   state.count += val
-    // },
-    // addToCart(state, payload) {
-    //   state.cart.push(payload.product)
-    // },
-    // removeFromCart(state, { productId }) {
-    //   const idx = state.cart.findIndex((product) => product._id === productId)
-    //   state.cart.splice(idx, 1)
-    // },
-    // addProduct({ products }, { product }) {
-    //   const newProduct = productService.save(product)
-    //   products.push(newProduct)
-    // },
-    // checkout(state) {
-    //   const cartTotal = state.cart.reduce((acc, prd) => acc + prd.price, 0)
-    //   if (cartTotal > state.user.balance) {
-    //     showErrorMsg('Not enough money...')
-    //     return
-    //   }
-    //   const order = {
-    //     _id: utilService.makeId(),
-    //     createdAt: Date.now(),
-    //     items: state.cart,
-    //     total: cartTotal,
-    //     status: 'pending',
-    //   }
-    //   userService.addOrder(order)
 
-    //   state.user.orders.unshift(order)
-    //   state.user.balance -= cartTotal
-    //   state.cart = []
-    // },
-    // changeOrderStatus(state, { orderId, status }) {
-    //   userService.changeOrderStatus(orderId, status)
-    //   const order = state.user.orders.find((order) => order._id === orderId)
-    //   order.status = status
-    // },
-    // deposit(state, { amount }) {
-    //   userService.updateBalance(amount)
-    //   state.user.balance += amount
-    // },
   },
   getters: {
-    // cartTotal({ cart }) {
-    //   return cart.reduce((acc, prd) => acc + prd.price, 0)
-    // },
+    todos(state) {
+      console.log('todos fromm getters:', state.todos)
+      return state.todos
+    }
   },
+  actions: {
+    loadTodos(context) {
+      return todoService.query()
+        .then(todos => {
+          context.commit({ type: 'setTodos', todos })
+          return todos
+        })
+        .catch(err => {
+          console.log('Cannot load todos', err)
+          throw err
+        })
+
+    },
+  }
 }
 
 export const store = createStore(storeOptions)

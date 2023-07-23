@@ -22,6 +22,8 @@ export default {
 
     created() {
         // console.log()
+        this.$store.dispatch({type: 'loadTodos'})
+
 
     },
     computed: {
@@ -29,9 +31,14 @@ export default {
         //     return this.$store.state.products
         // }
 
-        todos() {
-            return this.$store.state.todos
-        }
+        todos(){
+            return this.$store.getters.todos
+        },
+
+        // todos() {
+        //     return this.$store.state.todos
+        // },
+
     },
     methods: {
         onRemoveTodo(todoId) {
